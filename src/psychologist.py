@@ -59,6 +59,28 @@ def command_id(message):
     bot.send_message(cid, f"Your chat id is {cid}")
 
 
+@bot.message_handler(commands=["cat"])
+def command_cat(message):
+    cid = message.chat.id
+    
+    # Extract text after /cat command
+    parts = message.text.split(maxsplit=1)
+    text = parts[1].strip() if len(parts) > 1 else ""
+    
+    if not text:
+        bot.send_message(cid, "Please provide text after /cat command. Usage: /cat texto")
+        return
+    
+    # Build the URL
+    cat_url = f"https://cataas.com/cat/says/{text}"
+    
+    try:
+        # Send the photo
+        bot.send_photo(cid, cat_url)
+    except Exception as e:
+        bot.send_message(cid, f"Error fetching cat image: {str(e)}")
+
+
 @bot.message_handler(func=lambda msg: is_message_text(msg))
 def echo_all(message):
     '''Answer for each new message.'''
