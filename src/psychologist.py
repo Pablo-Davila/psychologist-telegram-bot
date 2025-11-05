@@ -34,6 +34,7 @@ def send_welcome(message):
             f"Hi {user.first_name if user.first_name else 'there!'}"
             f"{' '+user.last_name if user.last_name else ''}."
             "\nHow are you feeling today? Please answer me in English."
+            "\n\n⚠️ This bot is only aimed for testing and entertainment. It does not offer professional advice."
         ),
     )
 
