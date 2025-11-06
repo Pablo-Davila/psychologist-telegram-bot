@@ -1,5 +1,6 @@
 
 import os
+from urllib.parse import quote
 
 import telebot
 
@@ -57,6 +58,22 @@ def command_github(message):
 def command_id(message):
     cid = message.chat.id
     bot.send_message(cid, f"Your chat id is {cid}")
+
+
+@bot.message_handler(commands=["cat"])
+def command_cat(message):
+    cid = message.chat.id
+    # Extract text after /cat command
+    text_parts = message.text.split(None, 1)
+    if len(text_parts) < 2:
+        bot.send_message(cid, "Please provide some text. Usage: /cat your text here")
+        return
+    
+    texto = text_parts[1]
+    # Build URL with the text (URL encode the text)
+    cat_url = f"https://cataas.com/cat/says/{quote(texto)}"
+    # Send the photo
+    bot.send_photo(cid, cat_url)
 
 
 @bot.message_handler(func=lambda msg: is_message_text(msg))
